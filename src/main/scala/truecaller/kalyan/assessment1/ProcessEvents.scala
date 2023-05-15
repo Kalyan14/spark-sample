@@ -8,15 +8,6 @@ object ProcessEvents {
 
   def main(args: Array[String]): Unit = {
 
-    val warehouseLocation = new File("spark-warehouse").getAbsolutePath
-
-    val spark = SparkSession
-      .builder()
-      .appName("Event Data Processing")
-      .config("spark.sql.warehouse.dir", warehouseLocation)
-      .enableHiveSupport()
-      .getOrCreate()
-
     /*
     * THOUGHTS:
     *
@@ -29,7 +20,24 @@ object ProcessEvents {
     *
     * */
 
-
   }
 
+  def helloWorld(): Unit = {
+
+    val warehouseLocation = new File("/home/saikalyan/IdeaProjects/spark-sample/src/main/resources/spark-warehouse").getAbsolutePath
+
+    val spark = SparkSession
+      .builder()
+      .appName("Event Data Processing")
+      .config("spark.master", "local")
+      .config("spark.sql.warehouse.dir", warehouseLocation)
+      .enableHiveSupport()
+      .getOrCreate()
+
+
+    print("EXECUTED HERE =========")
+    spark.sql("SHOW DATABASES ").show(false)
+
+    spark.stop()
+  }
 }
